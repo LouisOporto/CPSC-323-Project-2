@@ -55,7 +55,6 @@ def tokenize(input_string: str) -> list:
     return tokens
 
 def parser(input_string):
-    # input_string = input_string.replace(' ', '')
     print(input_string)
 
 
