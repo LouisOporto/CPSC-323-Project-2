@@ -34,6 +34,15 @@
 #    T'    | /, *, ɛ | +, -, ), $
 #    F     | (, a    | $
 
+# Predictive Parsing Table
+
+# States |  a  |  +  |  -  |  *  |  /  |  (  |  )  |  $  |
+#   E    | TE' |     |     |     |     | TE' |     |     |
+#   E'   |     | T+E'| T-E'|     |     |     |  ɛ  |  ɛ  |
+#   T    | FT' |     |     |     |     | FT' |     |     |
+#   T'   |     |  ɛ  |  ɛ  | F*T | F/T |     |  ɛ  |  ɛ  |
+#   F    |  a  |     |     |     |     | (E) |     |     |
+
 # Input Examples: (remove whitespace)
 # "(a+a)*a$"
 # "a*(a/a)$"
