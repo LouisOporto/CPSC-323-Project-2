@@ -57,9 +57,9 @@ def tokenize(input_string: str) -> list:
         elif current_number:
             tokens.append(current_number)
             current_number = ""
-            if char in "+=*/()":
+            if char in "+=*/()$":
                 tokens.append(char)
-        elif char in "+-*/()":
+        elif char in "+-*/()$":
             tokens.append(char)
     if current_number:
         tokens.append(current_number)
@@ -98,16 +98,30 @@ def parser(tokens, parser_table, start_symbol):
     stack = ['$', start_symbol]
     index = 0
 
-    print(tokens)
-
     while (stack):
         top = stack.pop()
         current_token = tokens[index]
-        # TODO Complete rest of parser #
+        
+        if top == current_token == '$':
+            break
+        
+        elif top in parser_table: # Non-terminal
+            production = parser_table[top].get(current_token)
+            if production is None:
+                print(f"Syntax error at token '{current_token}', expected something for non-terminal '{top}'")
+                break
+            for symbol in reversed(production):
+                if symbol != '':
+                    stack.append(symbol)
+        
+        elif top == current_token: # Terminal match
+            index += 1
+        
+        else:
+            print(f"Syntax error: expected '{top}', got '{current_token}'")
+            break
 
-
-    # END TODO #
-    if index == len(tokens):
+    if index == len(tokens) - 1:
         print("Parsing Complete: Input passed!\n")
         return True
     else:
