@@ -35,7 +35,6 @@
 #    F     | (, a    | $
 
 # Predictive Parsing Table
-
 # States |  a  |  +  |  -  |  *  |  /  |  (  |  )  |  $  |
 #   E    | TE' |     |     |     |     | TE' |     |     |
 #   E'   |     | T+E'| T-E'|     |     |     |  ɛ  |  ɛ  |
@@ -48,48 +47,7 @@
 # "a*(a/a)$"
 # "a(a+a)$"
 
-# Invalid method need to change this but an idea
-class Parser:
-    def __init__(self, tokens):
-        self.tokens = tokens
-        self.current_token_index = 0 
-    
-    def _get_next_token(self):
-        if self.current_token_index < len(self.tokens):
-            return self.tokens[self.current_token_index]
-        return None
-    
-    def _consume_token(self):
-        self.current_token_index += 1
-
-    def parse(self):
-        return self.parse_expression()
-    
-    def parse_expression(self):
-        left_term = self.parse_term()
-        while self._get_next_token in "+-":
-            op = self._get_next_token()
-            self._consume_token()
-            right_term = self.prase_term()
-            left_term = self.self.evaluate(left_term, op, right_term)
-        return left_term
-    
-    def parse_term(self):
-        token = self._get_next_token()
-        self._consume_token()
-        return int(token)
-    
-    def evaluate(self, left, op, right):
-        if op == "+":
-            return left + right
-        if op == "-":
-            return left - right
-        if op == "*":
-            return left * right
-        if op == "/":
-            return left * right
-
-## Currently used below     
+# Currently used below     
 def tokenize(input_string: str) -> list:
     tokens = []
     current_number = ""
@@ -107,9 +65,17 @@ def tokenize(input_string: str) -> list:
         tokens.append(current_number)
     return tokens
 
-def parser(input_string):
-    print(input_string)
+def parser(tokens, parser_table, start_symbol):
+    stack = ['$', start_symbol]
+    index = 0
+
+    print(tokens)
+
+    while (stack):
+        top = stack.pop()
+        current_token = tokens[index]
  
+
 if __name__ == "__main__":
     print("Running LR parser\n")
 
