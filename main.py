@@ -97,14 +97,14 @@ def tokenize(input_string: str) -> list:
         if char.isdigit() or char.isalpha():
             current_number += char
         elif current_number:
-            tokens.append(("NUMBER", current_number))
+            tokens.append(current_number)
             current_number = ""
             if char in "+=*/()":
-                tokens.append((char, char))
+                tokens.append(char)
         elif char in "+-*/()":
-            tokens.append((char, char))
+            tokens.append(char)
     if current_number:
-        tokens.append(("NUMBER", current_number))
+        tokens.append(current_number)
     return tokens
 
 def parser(input_string):
