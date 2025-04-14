@@ -65,6 +65,25 @@ def tokenize(input_string: str) -> list:
         tokens.append(current_number)
     return tokens
 
+parser_table = {
+    'E': {
+        'a': ['T', 'E\''],
+        '(': ['T', 'E\'']
+    },
+    'E\'': {
+
+    },
+    'T': {
+
+    },
+    'T\'': {
+
+    },
+    'F': {
+
+    }
+}
+
 def parser(tokens, parser_table, start_symbol):
     stack = ['$', start_symbol]
     index = 0
@@ -74,7 +93,16 @@ def parser(tokens, parser_table, start_symbol):
     while (stack):
         top = stack.pop()
         current_token = tokens[index]
- 
+        # TODO Complete rest of parser #
+
+
+    # END TODO #
+    if index == len(tokens):
+        print("Parsing Complete: Input passed!")
+        return True
+    else:
+        print("Parsing Complete: Input failed!")
+        return False
 
 if __name__ == "__main__":
     print("Running LR parser\n")
@@ -83,13 +111,13 @@ if __name__ == "__main__":
     string2 = "a*(a/a)$"
     string3 = "a (a + a) $"
     print(f"Input string: \"{string1}\"")
-    tokens1 = tokenize(string1)
+    tokens1 = tokenize(string1, parser_table, 'E')
     parser(tokens1)
 
     print(f"Input string: \"{string2}\"")
-    tokens2 = tokenize(string2)
+    tokens2 = tokenize(string2, parser_table, 'E')
     parser(tokens2)
 
     print(f"Input string: \"{string3}\"")
-    tokens3 = tokenize(string3)
+    tokens3 = tokenize(string3, parser_table, 'E')
     parser(tokens3)
