@@ -55,7 +55,7 @@ class Parser:
         self.current_token_index = 0 
     
     def _get_next_token(self):
-        if self.current_token_index < len(self.tokens)
+        if self.current_token_index < len(self.tokens):
             return self.tokens[self.current_token_index]
         return None
     
@@ -88,7 +88,8 @@ class Parser:
             return left * right
         if op == "/":
             return left * right
-        
+
+## Currently used below     
 def tokenize(input_string: str) -> list:
     tokens = []
     current_number = ""
@@ -108,8 +109,7 @@ def tokenize(input_string: str) -> list:
 
 def parser(input_string):
     print(input_string)
-
-
+ 
 if __name__ == "__main__":
     print("Running LR parser\n")
 
