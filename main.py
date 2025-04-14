@@ -98,26 +98,26 @@ def parser(tokens, parser_table, start_symbol):
 
     # END TODO #
     if index == len(tokens):
-        print("Parsing Complete: Input passed!")
+        print("Parsing Complete: Input passed!\n")
         return True
     else:
-        print("Parsing Complete: Input failed!")
+        print("Parsing Complete: Input failed!\n")
         return False
 
 if __name__ == "__main__":
     print("Running LR parser\n")
 
     string1 = "(a + a)*a$"
-    string2 = "a*(a/a)$"
-    string3 = "a (a + a) $"
     print(f"Input string: \"{string1}\"")
-    tokens1 = tokenize(string1, parser_table, 'E')
-    parser(tokens1)
+    tokens1 = tokenize(string1)
+    parser(tokens1, parser_table, 'E')
 
+    string2 = "a*(a/a)$"
     print(f"Input string: \"{string2}\"")
-    tokens2 = tokenize(string2, parser_table, 'E')
-    parser(tokens2)
+    tokens2 = tokenize(string2)
+    parser(tokens2, parser_table, 'E')
 
+    string3 = "a (a + a) $"
     print(f"Input string: \"{string3}\"")
-    tokens3 = tokenize(string3, parser_table, 'E')
-    parser(tokens3)
+    tokens3 = tokenize(string3)
+    parser(tokens3, parser_table, 'E')
