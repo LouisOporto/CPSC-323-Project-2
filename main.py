@@ -1,17 +1,6 @@
 # Create a parser given the alphabet
 # {i, +, -, *, /, ), (} and ending with $
 
-# Given a CFG and parsing table
-# CFG (original)
-# E -> E + T
-# E -> E - T
-# E -> T
-# T -> T * F
-# T -> T / F
-# T -> F
-# F -> (E)
-# F -> a
-
 # Left-recursion rules elimination
 # E -> TE'
 # E' -> T + E'
@@ -26,14 +15,6 @@
 # F -> (E)
 # F -> a
 
-# First and Follow Table
-# ELEMENT  |  FIRST  | FOLLOW
-#    E     | (, a    | $, )
-#    E'    | +, -, ɛ | $, ) 
-#    T     | (, a    | +, -, ), $
-#    T'    | /, *, ɛ | +, -, ), $
-#    F     | (, a    | $
-
 # Predictive Parsing Table
 # States |  a  |  +  |  -  |  *  |  /  |  (  |  )  |  $  |
 #   E    | TE' |     |     |     |     | TE' |     |     |
@@ -42,12 +23,7 @@
 #   T'   |     |  ɛ  |  ɛ  | F*T | F/T |     |  ɛ  |  ɛ  |
 #   F    |  a  |     |     |     |     | (E) |     |     |
 
-# Input Examples: (remove whitespace)
-# "(a+a)*a$"
-# "a*(a/a)$"
-# "a(a+a)$"
-
-# Currently used below     
+# Retrieve all the valid language alphabet (removing whitespace)
 def tokenize(input_string: str) -> list:
     tokens = []
     current_number = ""
@@ -65,7 +41,7 @@ def tokenize(input_string: str) -> list:
         tokens.append(current_number)
     return tokens
 
-parser_table = {
+parser_table = { # Parsing Table and their expanded ACTIONS
     'E': {
         'a': ['T', 'E\''],
         '(': ['T', 'E\'']
@@ -99,10 +75,12 @@ def parser(tokens, parser_table, start_symbol):
     index = 0
 
     while (stack):
+        # Start with the starting symbol in the stack until we reach $ or otherwise fail.
         top = stack.pop()
         current_token = tokens[index]
         
         if top == current_token == '$':
+            # Completed parser and is valid
             break
         
         elif top in parser_table: # Non-terminal
@@ -121,26 +99,29 @@ def parser(tokens, parser_table, start_symbol):
             print(f"Syntax error: expected '{top}', got '{current_token}'")
             break
 
-    if index == len(tokens) - 1:
+    if index == len(tokens) - 1: # Valid String
         print("Parsing Complete: Input passed!\n")
         return True
-    else:
+    else: # Invalid String
         print("Parsing Complete: Input failed!\n")
         return False
 
 if __name__ == "__main__":
     print("Running LR parser\n")
 
+    # Example 1
     string1 = "(a + a)*a$"
     print(f"Input string: \"{string1}\"")
     tokens1 = tokenize(string1)
     parser(tokens1, parser_table, 'E')
 
+    # Example 2
     string2 = "a*(a/a)$"
     print(f"Input string: \"{string2}\"")
     tokens2 = tokenize(string2)
     parser(tokens2, parser_table, 'E')
 
+    # Example 3
     string3 = "a (a + a) $"
     print(f"Input string: \"{string3}\"")
     tokens3 = tokenize(string3)
