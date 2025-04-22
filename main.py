@@ -100,29 +100,29 @@ def parser(tokens, parser_table, start_symbol):
             break
 
     if index == len(tokens) - 1: # Valid String
-        print("Parsing Complete: Input passed!\n")
+        print("Output: String is accepted / valid.\n")
         return True
     else: # Invalid String
-        print("Parsing Complete: Input failed!\n")
+        print("Output: String is not accepted / invalid.\n")
         return False
 
 if __name__ == "__main__":
-    print("Running LR parser\n")
+    print("Running predictive parser\n")
 
     # Example 1
     string1 = "(a + a)*a$"
-    print(f"Input string: \"{string1}\"")
+    print(f"Input: \"{string1}\"")
     tokens1 = tokenize(string1)
     parser(tokens1, parser_table, 'E')
 
     # Example 2
     string2 = "a*(a/a)$"
-    print(f"Input string: \"{string2}\"")
+    print(f"Input: \"{string2}\"")
     tokens2 = tokenize(string2)
     parser(tokens2, parser_table, 'E')
 
     # Example 3
     string3 = "a (a + a) $"
-    print(f"Input string: \"{string3}\"")
+    print(f"Input: \"{string3}\"")
     tokens3 = tokenize(string3)
     parser(tokens3, parser_table, 'E')
